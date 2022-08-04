@@ -11,7 +11,7 @@ let engine;
 let world;
 var ground;
 var rope;
-var fruit;
+var fruit, conection;
 
 function setup() 
 {
@@ -25,11 +25,13 @@ function setup()
   console.log(rope);
   fruit = Bodies.circle(300, 300, 15, {density: 0.001});
   Composite.add(rope.body, fruit);
+  conection = new Link(rope, fruit);
 
   rectMode(CENTER);
   ellipseMode(RADIUS);
   textSize(50)
 }
+
 
 function draw() 
 {
