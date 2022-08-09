@@ -7,11 +7,16 @@ const Body = Matter.Body;
 const Composites = Matter.Composites;
 const Composite = Matter.Composite;
 
-let engine;
-let world;
-var ground;
-var rope;
-var fruit, conection;
+var engine, world;
+var ground, rope, fruit, conection;
+var fruitImg, rabbitEatingImg, rabbitImg, backgroundImg;
+
+function preload()
+{
+  fruitImg = loadImage("melon.png");
+  rabbitImg = loadImage("rabbit_eating.png");
+  backgroundImg = loadImage("background.png");
+}
 
 function setup() 
 {
@@ -29,16 +34,20 @@ function setup()
 
   rectMode(CENTER);
   ellipseMode(RADIUS);
-  textSize(50)
+  textSize(50);
+
+  imageMode(CENTER);
 }
 
 
 function draw() 
 {
   background(51);
-  Engine.update(engine);
+  image(backgroundImg, width/2, height/2, 500, 700);
 
+  Engine.update(engine);
+  
   rope.show();
-  ellipse(fruit.position.x, fruit.position.y, 15, 15);
+  image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
   ground.show();
 }
