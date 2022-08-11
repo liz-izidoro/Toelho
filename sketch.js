@@ -8,8 +8,9 @@ const Composites = Matter.Composites;
 const Composite = Matter.Composite;
 
 var engine, world;
-var ground, rope, fruit, conection;
+var ground, rope, fruit, conection, rabbit;
 var fruitImg, rabbitEatingImg, rabbitImg, backgroundImg;
+var button;
 
 function preload()
 {
@@ -32,6 +33,12 @@ function setup()
   Composite.add(rope.body, fruit);
   conection = new Link(rope, fruit);
 
+  rabbit = createSprite(250, 650, 100, 100);
+  rabbit.addImage(rabbitImg);
+  rabbit.scale = 0.2;
+
+
+
   rectMode(CENTER);
   ellipseMode(RADIUS);
   textSize(50);
@@ -50,4 +57,13 @@ function draw()
   rope.show();
   image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
   ground.show();
+
+  drawSprites()
+
+}
+
+function drop(){
+  rope.break();
+  conection.break();
+  conection = null;
 }

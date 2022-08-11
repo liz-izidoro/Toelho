@@ -15,4 +15,8 @@ class Link{
             });
         World.add(world, this.link);
     }
+    break() {
+        World.remove(world, this.link);
+    }
+
 }
