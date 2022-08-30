@@ -11,12 +11,21 @@ var engine, world;
 var ground, rope, fruit, conection, rabbit;
 var fruitImg, rabbitEatingImg, rabbitImg, backgroundImg;
 var button;
+var eat, sad, blink;
 
 function preload()
 {
   fruitImg = loadImage("melon.png");
   rabbitImg = loadImage("rabbit_eating.png");
   backgroundImg = loadImage("background.png");
+
+  eat = loadAnimation('eat_0.png', 'eat_1.png', 'eat_2.png', 'eat_3.png', 'eat_4.png');
+  sad = loadAnimation('sad_1.png', 'sad_2.png', 'sad_3.png');
+  blink = loadAnimation('blink_1.png', 'blink_2.png', 'blink_3.png');
+
+  blink.playing = true;
+  eat.playing = true;
+  eat.looping = false;
 }
 
 function setup() 
@@ -28,15 +37,26 @@ function setup()
 
   ground = new Ground(200, 690, 600, 20);
   rope = new Rope(6,{x: 245, y:30});
-  console.log(rope);
+  
   fruit = Bodies.circle(300, 300, 15, {density: 0.001});
   Composite.add(rope.body, fruit);
   conection = new Link(rope, fruit);
 
-  rabbit = createSprite(250, 650, 100, 100);
-  rabbit.addImage(rabbitImg);
-  rabbit.scale = 0.2;
+  blink.frameDelay = 20;
+  eat.frameDelay = 20;
 
+  rabbit = createSprite(250, 610, 100, 100);
+  rabbit.addAnimation('blinking', blink);
+  rabbit.addAnimation('eating', eat);
+  rabbit.changeAnimation('blinking');
+  rabbit.scale = 0.2;
+  // rabbit.addImage(rabbitImg);
+
+  
+  button = createImg('cut_btn.png');
+  button.position(220, 30);
+  button.size(50, 50);
+  button.mouseClicked(drop);
 
 
   rectMode(CENTER);
@@ -58,7 +78,7 @@ function draw()
   image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
   ground.show();
 
-  drawSprites()
+  drawSprites();
 
 }
 
