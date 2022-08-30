@@ -26,6 +26,8 @@ function preload()
   blink.playing = true;
   eat.playing = true;
   eat.looping = false;
+  sad.playing = true;
+  sad.looping = false;
 }
 
 function setup() 
@@ -44,13 +46,14 @@ function setup()
 
   blink.frameDelay = 20;
   eat.frameDelay = 20;
+  sad.frameDelay = 20;
 
   rabbit = createSprite(250, 610, 100, 100);
   rabbit.addAnimation('blinking', blink);
   rabbit.addAnimation('eating', eat);
+  rabbit.addAnimation('crying', sad);
   rabbit.changeAnimation('blinking');
   rabbit.scale = 0.2;
-  // rabbit.addImage(rabbitImg);
 
   
   button = createImg('cut_btn.png');
