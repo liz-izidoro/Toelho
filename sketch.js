@@ -78,8 +78,19 @@ function draw()
   Engine.update(engine);
   
   rope.show();
-  image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
+  if (fruit != null) {
+    image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
+    
+  }
   ground.show();
+
+  var collided = collide(fruit, rabbit);
+  if (collided === true) {
+    rabbit.changeAnimation("eating");
+
+  } else if(collided === false) {
+    rabbit.changeAnimation("crying");
+  }
 
   drawSprites();
 
@@ -90,3 +101,19 @@ function drop(){
   conection.break();
   conection = null;
 }
+
+function collide(body, sprite){
+  if (body != null) {
+    var d = dist(body.position.x, body.position.y, sprite.position.x, sprite.position.y);
+    if (d <= 80) {
+      World.remove(world, fruit);
+      fruit = null;
+      return true;
+
+    } else {
+      return false;
+    }
+  }
+
+}
+
