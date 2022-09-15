@@ -5,6 +5,7 @@ class Ground {
         World.add(world, this.body);
         this.w = w;
         this.h = h;
+        this.position = this.body.position;
     }
 
     show()

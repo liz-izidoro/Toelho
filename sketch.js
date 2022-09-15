@@ -10,6 +10,7 @@ const Composite = Matter.Composite;
 var engine, world;
 var ground, rope, fruit, conection, rabbit;
 var fruitImg, rabbitEatingImg, rabbitImg, backgroundImg;
+var eatSound, cutSound, bkSound, airSound;
 var button;
 var eat, sad, blink;
 
@@ -22,6 +23,11 @@ function preload()
   eat = loadAnimation('eat_0.png', 'eat_1.png', 'eat_2.png', 'eat_3.png', 'eat_4.png');
   sad = loadAnimation('sad_1.png', 'sad_2.png', 'sad_3.png');
   blink = loadAnimation('blink_1.png', 'blink_2.png', 'blink_3.png');
+
+  eatSound = loadSound("eating_sound.mp3");
+  cutSound = loadSound("rope_cut.mp3");
+  bkSound = loadSound("sound1.mp3");
+  airSound = loadSound("Cutting Through Foliage.mp3");
 
   blink.playing = true;
   eat.playing = true;
@@ -54,7 +60,6 @@ function setup()
   rabbit.addAnimation('crying', sad);
   rabbit.changeAnimation('blinking');
   rabbit.scale = 0.2;
-
   
   button = createImg('cut_btn.png');
   button.position(220, 30);
@@ -80,20 +85,19 @@ function draw()
   rope.show();
   if (fruit != null) {
     image(fruitImg, fruit.position.x, fruit.position.y, 60, 60);
-    
   }
+
   ground.show();
 
-  var collided = collide(fruit, rabbit);
-  if (collided === true) {
+  if (collide(fruit, rabbit) == true) {
     rabbit.changeAnimation("eating");
-
-  } else if(collided === false) {
+  }
+  
+  if (collide(fruit, ground) == true) {
     rabbit.changeAnimation("crying");
   }
 
   drawSprites();
-
 }
 
 function drop(){
@@ -102,18 +106,16 @@ function drop(){
   conection = null;
 }
 
-function collide(body, sprite){
-  if (body != null) {
-    var d = dist(body.position.x, body.position.y, sprite.position.x, sprite.position.y);
+function collide(body1, body2){
+  if (body1 != null) {
+    var d = dist(body1.position.x, body1.position.y, body2.position.x, body2.position.y);
     if (d <= 80) {
       World.remove(world, fruit);
       fruit = null;
       return true;
-
     } else {
       return false;
     }
   }
 
 }
-
