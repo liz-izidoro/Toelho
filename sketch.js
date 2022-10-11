@@ -29,6 +29,8 @@ var sad_sound;
 var eating_sound;
 var air;
 
+var canH, canW;
+
 function preload()
 {
   bg_img = loadImage('background.png');
@@ -53,7 +55,17 @@ function preload()
 }
 
 function setup() {
-  createCanvas(500,700);
+  var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (isMobile) {
+    canW = displayWidth;
+    canH = displayHeight;
+    createCanvas(displayWidth+80, displayHeight);
+  } else {
+    canW = windowWidth;
+    canH = windowHeight;
+    createCanvas(windowWidth+80, windowHeight);
+  }
+ 
  
   frameRate(80);
 
@@ -87,12 +99,12 @@ function setup() {
   rope2 = new Rope(7,{x:370,y:40});
   rope3 = new Rope(4,{x:400,y:225});
 
-  ground = new Ground(200,690,600,20);
+  ground = new Ground(200,canH,600,20);
 
   blink.frameDelay = 20;
   eat.frameDelay = 20;
 
-  bunny = createSprite(420,620,100,100);
+  bunny = createSprite(420,canH-80,100,100);
   bunny.scale = 0.2;
 
   bunny.addAnimation('blinking',blink);
@@ -116,7 +128,7 @@ function setup() {
 function draw() 
 {
   background(51);
-  image(bg_img,0,0,490,690);
+  image(bg_img,0,0,canW+80,canH);
 
   push();
   imageMode(CENTER);
